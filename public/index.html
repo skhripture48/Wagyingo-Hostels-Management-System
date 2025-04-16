@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wagyingo Hostels - Student Accommodation</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Wagyingo Hostels</div>
+        <button class="menu-btn" id="menuBtn">☰</button>
+        <div class="nav-links">
+            <div class="nav-menu">
+                <a href="index.html" class="active">Home</a>
+                <a href="explore.html">Explore</a>
+                <a href="#" id="roomsNavLink" style="display: none;">Available Rooms</a>
+                <a href="booking-details.html" id="bookingDetailsLink" style="display: none;">My Booking</a>
+                <a href="residents-portal.html" id="residentsPortalLink" style="display: none;">Residents Portal</a>
+            </div>
+            <div id="auth-buttons">
+                <button id="loginBtn" class="btn">Login</button>
+                <button id="registerBtn" class="btn">Register</button>
+                <button id="logoutBtn" class="btn" style="display: none;">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-slider">
+            <div class="slide active" style="background-image: url('assets/main-slider.jpg')">
+                <div class="slide-content">
+                    <span class="hero-subtitle">WELCOME TO WAGYINGO HOSTELS</span>
+                    <h1>Premium Student Living<br>Near KNUST</h1>
+                    <p class="hero-description">Experience comfort, security, and academic excellence in our modern accommodations</p>
+                    <div class="hero-cta">
+                        <button class="btn btn-primary" onclick="document.getElementById('hostels').scrollIntoView({behavior: 'smooth'})">View Our Hostels</button>
+                        <button class="btn btn-outline" onclick="showModal(loginModal)">Take a Tour</button>
+                    </div>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url('assets/onyx-slider.jpg')">
+                <div class="slide-content">
+                    <span class="hero-subtitle">DISCOVER ONYX HOSTEL</span>
+                    <h1>Modern Living Meets<br>Academic Success</h1>
+                    <p class="hero-description">State-of-the-art facilities designed for the modern student lifestyle</p>
+                    <div class="hero-cta">
+                        <button class="btn btn-primary" onclick="document.getElementById('hostels').scrollIntoView({behavior: 'smooth'})">Check Availability</button>
+                        <button class="btn btn-outline" onclick="showModal(loginModal)">Learn More</button>
+                    </div>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url('assets/opal-slider.jpg')">
+                <div class="slide-content">
+                    <span class="hero-subtitle">WELCOME TO OPAL HOSTEL</span>
+                    <h1>Where Focus Meets<br>Recreation</h1>
+                    <p class="hero-description">The perfect balance of study spaces and entertainment facilities</p>
+                    <div class="hero-cta">
+                        <button class="btn btn-primary" onclick="document.getElementById('hostels').scrollIntoView({behavior: 'smooth'})">Book Now</button>
+                        <button class="btn btn-outline" onclick="showModal(loginModal)">View Details</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slider-nav">
+            <button class="prev-slide">❮</button>
+            <button class="next-slide">❯</button>
+        </div>
+    </header>
+
+    <section id="hostels" class="hostels-section">
+        <h2>Check for Rooms</h2>
+        <div class="hostels-grid">
+            <div class="hostel-card" onclick="handleHostelClick('Wagyingo Main Hostel')">
+                <img src="assets/main-m.jpg" alt="Main Hostel">
+                <div class="hostel-info">
+                    <h3>Main Hostel</h3>
+                    <p>Our flagship accommodation with premium amenities and convenient location near KNUST.</p>
+                    <div class="hostel-features">
+                        <div class="feature-item">
+                            <i class="fas fa-bed"></i>
+                            <span>Single Rooms</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-bed"></i>
+                            <span>Double Rooms</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-users"></i>
+                            <span>Quad Rooms</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-book"></i>
+                            <span>Study Rooms</span>
+                        </div>
+                    </div>
+                    <button class="btn" onclick="event.stopPropagation(); handleHostelClick('Wagyingo Main Hostel')">
+                        Check Available Rooms
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="hostel-card" onclick="handleHostelClick('Wagyingo Onyx Hostel')">
+                <img src="assets/onyx-m.jpg" alt="Onyx Hostel">
+                <div class="hostel-info">
+                    <h3>Onyx Hostel</h3>
+                    <p>Modern living spaces designed for academic excellence and comfort.</p>
+                    <div class="hostel-features">
+                        <div class="feature-item">
+                            <i class="fas fa-bed"></i>
+                            <span>Single Rooms</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-bed"></i>
+                            <span>Double Rooms</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-users"></i>
+                            <span>Triple Rooms</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-book"></i>
+                            <span>Study Rooms</span>
+                        </div>
+                    </div>
+                    <button class="btn" onclick="event.stopPropagation(); handleHostelClick('Wagyingo Onyx Hostel')">
+                        Check Available Rooms
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="hostel-card" onclick="handleHostelClick('Wagyingo Opal Hostel')">
+                <img src="assets/opal-m.jpg" alt="Opal Hostel">
+                <div class="hostel-info">
+                    <h3>Opal Hostel</h3>
+                    <p>The perfect blend of academic focus and recreational facilities.</p>
+                    <div class="hostel-features">
+                        <div class="feature-item">
+                            <i class="fas fa-bed"></i>
+                            <span>Single Rooms</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-bed"></i>
+                            <span>Double Rooms</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-book"></i>
+                            <span>Study Area</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-gamepad"></i>
+                            <span>Gaming Center</span>
+                        </div>
+                    </div>
+                    <button class="btn" onclick="event.stopPropagation(); handleHostelClick('Wagyingo Opal Hostel')">
+                        Check Available Rooms
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rooms Section -->
+    <section class="rooms-section hidden" id="rooms-section">
+        <h2>Available Rooms</h2>
+        <div class="search-filter-container">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" class="search-input" placeholder="Search by room name (e.g. P102) or type..." id="roomSearch">
+            </div>
+            
+            <div class="filter-group">
+                <label class="filter-label">Room Type</label>
+                <select class="filter-select" id="roomTypeFilter">
+                    <option value="">All Room Types</option>
+                    <option value="Single">Single</option>
+                    <option value="Double">Double</option>
+                    <option value="Triple">Triple</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label class="filter-label">Price Range</label>
+                <select class="filter-select" id="priceFilter">
+                    <option value="">All Prices</option>
+                    <option value="9500">GHS 9,500</option>
+                    <option value="11500">GHS 11,500</option>
+                    <option value="12000">GHS 12,000</option>
+                    <option value="13000">GHS 13,000</option>
+                    <option value="19000">GHS 19,000</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+        </div>
+
+        <div class="rooms-grid" id="rooms-grid">
+            <!-- Room cards will be dynamically inserted here -->
+        </div>
+
+        <div class="pagination-container">
+            <div class="items-per-page">
+                <label for="items-per-page">Show:</label>
+                <select id="items-per-page">
+                    <option value="15">15 per page</option>
+                    <option value="30">30 per page</option>
+                    <option value="45">45 per page</option>
+                </select>
+            </div>
+            <div class="pagination" id="pagination">
+                <button class="prev-page" disabled><i class="fas fa-chevron-left"></i></button>
+                <!-- Page numbers will be dynamically inserted here -->
+                <button class="next-page"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <div class="pagination-info">
+                Showing <span id="showing-start">1</span>-<span id="showing-end">12</span> of <span id="total-items">0</span> rooms
+            </div>
+        </div>
+    </section>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <button type="button" class="modal-close">&times;</button>
+            <h2 class="modal-title">Welcome Back</h2>
+            <form id="loginForm">
+                <div class="modal-form-group">
+                    <input type="text" name="username" placeholder="Username" required>
+                </div>
+                <div class="modal-form-group password-group">
+                    <input type="password" name="password" id="login_password" placeholder="Password" required>
+                    <i class="password-toggle fas fa-eye" onclick="togglePassword('login_password')"></i>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="modal-btn modal-btn-primary">
+                        <span class="btn-text">Login to Your Account</span>
+                        <span class="btn-loader">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </span>
+                    </button>
+                </div>
+                <div class="auth-links">
+                    <a href="#" id="switchToRegister">Don't have an account? Register</a>
+                    <a href="#" id="resendVerificationLink">Need to resend verification code?</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Resend Verification Modal -->
+    <div id="resendVerificationModal" class="modal">
+        <div class="modal-content">
+            <button type="button" class="modal-close">&times;</button>
+            <h2 class="modal-title">Resend Verification Code</h2>
+            <form id="resendVerificationForm">
+                <div class="modal-form-group">
+                    <label for="resendUsername">Username</label>
+                    <input type="text" id="resendUsername" name="username" placeholder="Enter your username" required>
+                </div>
+                <div class="modal-form-group" id="emailUpdateSection" style="display: none;">
+                    <label for="newEmail">New Email Address (Optional)</label>
+                    <input type="email" id="newEmail" name="email" placeholder="Enter new email address">
+                    <div class="modal-text-muted">Current email: <span id="currentEmail"></span></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="modal-btn modal-btn-secondary" onclick="closeModal('resendVerificationModal')">Cancel</button>
+                    <button type="button" class="modal-btn modal-btn-primary" id="resendVerificationBtn">
+                        <span class="btn-text">Resend Code</span>
+                        <span class="btn-loader">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <button type="button" class="modal-close">&times;</button>
+            <h2 class="modal-title">Create Account</h2>
+            <form id="registerForm">
+                <div class="modal-form-group">
+                    <input type="text" name="full_name" placeholder="Full Name" required>
+                </div>
+                <div class="modal-form-group">
+                    <input type="text" name="username" placeholder="Username" required>
+                </div>
+                <div class="modal-form-group">
+                    <input type="email" name="email" placeholder="Email" required>
+                </div>
+                <div class="modal-form-group">
+                    <select name="preferred_hostel" required>
+                        <option value="">Select Preferred Hostel</option>
+                        <option value="Wagyingo Main Hostel">Wagyingo Main Hostel</option>
+                        <option value="Wagyingo Onyx Hostel">Wagyingo Onyx Hostel</option>
+                        <option value="Wagyingo Opal Hostel">Wagyingo Opal Hostel</option>
+                    </select>
+                </div>
+                <div class="modal-form-group password-group">
+                    <input type="password" name="password" id="reg_password" placeholder="Password" required>
+                    <i class="password-toggle fas fa-eye" onclick="togglePassword('reg_password')"></i>
+                    <div class="password-strength-meter">
+                        <div class="strength-meter-fill"></div>
+                    </div>
+                </div>
+                <div class="modal-form-group password-group">
+                    <input type="password" name="confirm_password" id="reg_confirm_password" placeholder="Confirm Password" required>
+                    <i class="password-toggle fas fa-eye" onclick="togglePassword('reg_confirm_password')"></i>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="modal-btn modal-btn-primary">
+                        <span class="btn-text">Create Account</span>
+                        <span class="btn-loader">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </span>
+                    </button>
+                </div>
+                <div class="auth-links">
+                    Already have an account? <a href="#" id="switchToLogin">Login</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content book-modal">
+            <button type="button" class="modal-close">&times;</button>
+            <div class="book-container">
+                <div class="book-page book-page-left">
+                    <h2>Book Your Room</h2>
+                    <p class="book-subtitle">Personal Information</p>
+                    <form id="bookingForm" class="booking-form">
+                        <input type="hidden" id="roomId" name="roomId">
+                        <div class="form-group">
+                            <label for="fullName">Full Name</label>
+                            <input type="text" id="fullName" name="fullName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="academicLevel">Academic Level</label>
+                            <select id="academicLevel" name="academicLevel" required>
+                                <option value="">Select Level</option>
+                                <option value="Year 1">Year 1</option>
+                                <option value="Year 2">Year 2</option>
+                                <option value="Year 3">Year 3</option>
+                                <option value="Year 4">Year 4</option>
+                                <option value="Year 5">Year 5</option>
+                                <option value="Year 6">Year 6</option>
+                                <option value="Postgraduate">Postgraduate</option>
+                                <option value="Service Personnel">Service Personnel</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Gender</label>
+                            <select id="gender" name="gender" required>
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="program">Program of Study</label>
+                            <input type="text" id="program" name="program" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="nationality">Nationality</label>
+                            <input type="text" id="nationality" name="nationality" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="book-spine"></div>
+                <div class="book-page book-page-right">
+                    <p class="book-subtitle">Guardian Information</p>
+                    <div class="form-group">
+                        <label for="guardianName">Guardian's Full Name</label>
+                        <input type="text" id="guardianName" name="guardianName" required form="bookingForm">
+                    </div>
+                    <div class="form-group">
+                        <label for="guardianRelationship">Relationship with Guardian</label>
+                        <input type="text" id="guardianRelationship" name="guardianRelationship" required form="bookingForm">
+                    </div>
+                    <div class="form-group">
+                        <label for="guardianPhone">Guardian's Phone Number</label>
+                        <input type="tel" id="guardianPhone" name="guardianPhone" required form="bookingForm">
+                    </div>
+                    <button type="submit" class="btn" form="bookingForm">Submit Booking</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <h2>Contact Us</h2>
+        <div class="contact-grid">
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="contact-info">
+                    <h3>Location</h3>
+                    <p>Ayeduase, Atta mills Junction, KNUST</p>
+                </div>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="fas fa-phone"></i>
+                </div>
+                <div class="contact-info">
+                    <h3>Phone</h3>
+                    <p>0203652247</p>
+                </div>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="contact-info">
+                    <h3>Email</h3>
+                    <p>students.wagyingo@gmail.com</p>
+                </div>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="contact-info">
+                    <h3>Office Hours</h3>
+                    <p>8:00 AM - 8:00 PM</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h2>Quick Links</h2>
+                <ul class="quick-links">
+                    <li><a href="#hostels" id="hostelsLink">Hostels</a></li>
+                    <li><a href="explore.html">Explore</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h2>Contact Us</h2>
+                <div class="hostel-locations">
+                    <div class="location-item">
+                        <h3>Wagyingo Main Hostel</h3>
+                        <p>Ayeduase, Atta mills Junction</p>
+                        <p>KNUST - Kumasi</p>
+                    </div>
+                    <div class="location-item">
+                        <h3>Wagyingo Onyx Hostel</h3>
+                        <p>Ayeduase</p>
+                        <p>KNUST - Kumasi</p>
+                    </div>
+                    <div class="location-item">
+                        <h3>Wagyingo Opal Hostel</h3>
+                        <p>Benab, Kotei Rd</p>
+                        <p>KNUST - Kumasi</p>
+                    </div>
+                </div>
+                <p class="contact-info">Phone: 0203652247</p>
+                <p class="contact-info">Email: students.wagyingo@gmail.com</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            © 2024 Wagyingo Hostels. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Notification Message Element -->
+    <div id="notificationMessage" class="notification-message"></div>
+
+    <script src="script.js"></script>
+    <script>
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notificationMessage');
+            const icon = type === 'success' ? 'check-circle' : 'exclamation-circle';
+            
+            notification.innerHTML = `<i class="fas fa-${icon}"></i>${message}`;
+            notification.className = `notification-message ${type}`;
+            notification.classList.add('visible');
+
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                notification.classList.remove('visible');
+            }, 5000);
+        }
+
+        // Function to validate the form
+        function validateForm(data) {
+            // Validate username length
+            if (data.username.length < 3) {
+                showNotification('Username must be at least 3 characters long', 'error');
+                return false;
+            }
+            
+            // Validate passwords match
+            if (data.password !== data.confirm_password) {
+                showNotification('Passwords do not match', 'error');
+                return false;
+            }
+
+            // Validate password length
+            if (data.password.length < 8) {
+                showNotification('Password must be at least 8 characters long', 'error');
+                return false;
+            }
+
+            // Check for empty fields
+            const emptyFields = Object.entries(data)
+                .filter(([key, value]) => !value && key !== 'confirm_password')
+                .map(([key]) => key.replace('_', ' '));
+
+            if (emptyFields.length > 0) {
+                showNotification(`Please fill in all fields: ${emptyFields.join(', ')}`, 'error');
+                return false;
+            }
+
+            return true;
+        }
+
+        // Handle form submission
+        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            
+            // Validate form
+            if (!validateForm(data)) {
+                return;
+            }
+
+            // Show loading state
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const btnLoader = submitBtn.querySelector('.btn-loader');
+            submitBtn.disabled = true;
+            btnText.style.display = 'none';
+            btnLoader.style.display = 'inline-block';
+
+            try {
+                const response = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(result.error || result.message || 'Registration failed');
+                }
+
+                // Show success message
+                showNotification('Registration successful! Please check your email for verification.');
+                
+                // Reset form
+                e.target.reset();
+                
+                // Hide modal and redirect
+                setTimeout(() => {
+                    document.getElementById('registerModal').style.display = 'none';
+                    window.location.href = '/login.html';
+                }, 1500);
+                
+            } catch (error) {
+                console.error('Registration error:', error);
+                showNotification(error.message || 'An error occurred during registration', 'error');
+            } finally {
+                // Restore button state
+                submitBtn.disabled = false;
+                btnText.style.display = 'inline-block';
+                btnLoader.style.display = 'none';
+            }
+        });
+
+        // Add real-time validation for username
+        let usernameTimeout;
+        document.querySelector('input[name="username"]').addEventListener('input', function(e) {
+            clearTimeout(usernameTimeout);
+            usernameTimeout = setTimeout(() => {
+                if (e.target.value.length > 0 && e.target.value.length < 3) {
+                    showNotification('Username must be at least 3 characters long', 'error');
+                }
+            }, 500);
+        });
+
+        // Add real-time validation for password match
+        let passwordTimeout;
+        document.querySelector('input[name="confirm_password"]').addEventListener('input', function(e) {
+            clearTimeout(passwordTimeout);
+            passwordTimeout = setTimeout(() => {
+                const password = document.querySelector('input[name="password"]').value;
+                if (e.target.value && password && e.target.value !== password) {
+                    showNotification('Passwords do not match', 'error');
+                }
+            }, 500);
+        });
+    </script>
+</body>
+</html> 

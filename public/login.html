@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Wagyingo Hostels</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --primary-dark: #2980b9;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+            background: transparent !important;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .login-slider {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            background-color: #000;
+        }
+
+        .login-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            display: none;
+            background-color: #000;
+        }
+
+        .login-slide.active {
+            opacity: 1;
+            display: block;
+        }
+
+        .login-slide img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, 
+                rgba(0, 0, 0, 0.7) 0%, 
+                rgba(0, 0, 0, 0.5) 50%, 
+                rgba(0, 0, 0, 0.7) 100%
+            );
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .login-nav {
+            position: fixed;
+            width: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 30;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 1.5rem;
+            pointer-events: none;
+            box-sizing: border-box;
+        }
+
+        .login-nav button {
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            color: white;
+            font-size: 1.25rem;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            pointer-events: auto;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .login-nav button:hover {
+            background: rgba(0, 0, 0, 0.8);
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+        }
+
+        .auth-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+            pointer-events: none;
+            padding: 1rem;
+            box-sizing: border-box;
+        }
+
+        .auth-form {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 420px;
+            pointer-events: auto;
+            transform: translateY(0);
+            transition: all 0.3s ease;
+            margin: 0;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .auth-form:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .logo h2 {
+            color: #ffffff;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+            font-weight: 400;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 1.75rem;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.75rem;
+            color: #ffffff;
+            font-weight: 500;
+            font-size: 0.95rem;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.7);
+            color: #000000;
+            box-sizing: border-box;
+            -webkit-text-fill-color: #000000;
+        }
+
+        .form-group input::placeholder {
+            color: rgba(0, 0, 0, 0.5);
+            -webkit-text-fill-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+            color: #000000;
+            -webkit-text-fill-color: #000000;
+        }
+
+        /* Selection color fix */
+        .form-group input::selection {
+            background-color: rgba(52, 152, 219, 0.2);
+            color: #000000;
+        }
+
+        .form-group input::-moz-selection {
+            background-color: rgba(52, 152, 219, 0.2);
+            color: #000000;
+        }
+
+        /* Remove autofill styles */
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus,
+        input:-webkit-autofill:active {
+            transition-delay: 9999s;
+            transition-property: background-color, color;
+            -webkit-box-shadow: 0 0 0 30px rgba(255, 255, 255, 0.7) inset !important;
+            -webkit-text-fill-color: #000000 !important;
+            caret-color: #000000 !important;
+        }
+
+        /* Override any browser default highlight colors */
+        ::selection {
+            background-color: rgba(0, 0, 0, 0.3) !important;
+            color: #ffffff !important;
+        }
+
+        ::-moz-selection {
+            background-color: rgba(0, 0, 0, 0.3) !important;
+            color: #ffffff !important;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 0.875rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+            box-shadow: 0 4px 6px rgba(52, 152, 219, 0.15);
+        }
+
+        button[type="submit"]:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(52, 152, 219, 0.2);
+        }
+
+        button[type="submit"]:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(52, 152, 219, 0.1);
+        }
+
+        .auth-links {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .auth-links a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .auth-links a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        .notification {
+            font-weight: 500;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            animation: slideIn 0.5s ease forwards;
+        }
+
+        @keyframes slideIn {
+            0% {
+                transform: translateX(-50%) translateY(-100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(-50%) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Error and Success Messages */
+        .error-message, .success-message {
+            padding: 1rem;
+            border-radius: 12px;
+            margin-top: 1rem;
+            font-weight: 500;
+            text-align: center;
+            animation: fadeIn 0.3s ease forwards;
+        }
+
+        .error-message {
+            background: #fee2e2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+
+        .success-message {
+            background: #dcfce7;
+            color: #16a34a;
+            border: 1px solid #bbf7d0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .auth-container {
+                padding: 1rem;
+                align-items: center;
+                justify-content: center;
+                padding-top: 0;
+                min-height: 100vh;
+            }
+
+            .auth-form {
+                background: rgba(255, 255, 255, 0.2);
+                padding: 1.5rem;
+                border-radius: 16px;
+                margin: 0 auto;
+                width: 90%;
+            }
+
+            .logo {
+                margin-bottom: 1.25rem;
+            }
+
+            .logo h2 {
+                font-size: 1.5rem;
+                margin-bottom: 0.35rem;
+            }
+
+            .logo p {
+                font-size: 0.9rem;
+                opacity: 0.9;
+                margin: 0;
+            }
+
+            .form-group {
+                margin-bottom: 1rem;
+            }
+
+            .form-group label {
+                font-size: 0.9rem;
+                margin-bottom: 0.35rem;
+            }
+
+            .form-group input {
+                background: rgba(255, 255, 255, 0.7);
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                color: #000000;
+            }
+
+            .form-group input:focus {
+                background: rgba(255, 255, 255, 0.8);
+            }
+
+            button[type="submit"] {
+                padding: 0.75rem;
+                font-size: 1rem;
+                margin-top: 0.75rem;
+            }
+
+            .auth-links {
+                margin-top: 1.25rem;
+            }
+
+            .login-nav {
+                padding: 0 1rem;
+            }
+
+            .login-nav button {
+                width: 2.75rem;
+                height: 2.75rem;
+                font-size: 1.1rem;
+                background: rgba(0, 0, 0, 0.7);
+                border-width: 1.5px;
+            }
+
+            .password-toggle {
+                padding: 0.4rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .auth-container {
+                padding: 0.75rem;
+            }
+
+            .auth-form {
+                width: 95%;
+                padding: 1.25rem;
+                border-radius: 14px;
+            }
+
+            .logo h2 {
+                font-size: 1.35rem;
+            }
+
+            .logo p {
+                font-size: 0.85rem;
+            }
+
+            .form-group input {
+                padding: 0.75rem;
+                border-radius: 8px;
+            }
+
+            button[type="submit"] {
+                padding: 0.75rem;
+                border-radius: 8px;
+            }
+
+            .login-nav {
+                padding: 0 0.75rem;
+            }
+
+            .login-nav button {
+                width: 2.5rem;
+                height: 2.5rem;
+                font-size: 1rem;
+                border-width: 1.5px;
+            }
+        }
+
+        @media (max-height: 600px) and (orientation: landscape) {
+            .auth-container {
+                padding: 0.5rem;
+                align-items: center;
+                min-height: 100vh;
+            }
+
+            .auth-form {
+                padding: 1rem;
+                max-height: 90vh;
+                overflow-y: auto;
+            }
+
+            .logo {
+                margin-bottom: 0.75rem;
+            }
+
+            .logo h2 {
+                font-size: 1.25rem;
+                margin-bottom: 0.25rem;
+            }
+
+            .logo p {
+                font-size: 0.8rem;
+                margin: 0;
+            }
+
+            .form-group {
+                margin-bottom: 0.5rem;
+            }
+
+            .form-group label {
+                margin-bottom: 0.25rem;
+            }
+
+            .form-group input {
+                padding: 0.6rem;
+            }
+
+            button[type="submit"] {
+                padding: 0.6rem;
+                margin-top: 0.5rem;
+            }
+
+            .auth-links {
+                margin-top: 0.75rem;
+            }
+        }
+
+        /* Dark mode improvements */
+        @media (prefers-color-scheme: dark) {
+            .auth-form {
+                background: rgba(0, 0, 0, 0.2);
+            }
+
+            .form-group input {
+                background: rgba(255, 255, 255, 0.7);
+                color: #000000;
+            }
+
+            .form-group input:focus {
+                background: rgba(255, 255, 255, 0.8);
+            }
+
+            .logo h2 {
+                color: #f3f4f6;
+            }
+
+            .logo p {
+                color: #9ca3af;
+            }
+
+            .auth-links a {
+                color: #60a5fa;
+            }
+
+            .auth-links a:hover {
+                color: #93c5fd;
+            }
+        }
+
+        /* Improved form focus styles */
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1);
+            background: rgba(255, 255, 255, 0.98);
+        }
+
+        /* Loading state for submit button */
+        button[type="submit"].loading {
+            position: relative;
+            color: transparent;
+        }
+
+        button[type="submit"].loading::after {
+            content: "";
+            position: absolute;
+            width: 1.25rem;
+            height: 1.25rem;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* Hide slider buttons completely */
+        .login-nav {
+            display: none !important;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+            padding: 0.5rem;
+            margin-top: 0.875rem;
+            z-index: 2;
+        }
+
+        .password-toggle:hover {
+            color: rgba(0, 0, 0, 0.8);
+        }
+
+        .form-group input[type="password"] {
+            padding-right: 3rem;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            overflow: auto;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal .modal-content {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 420px;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        .modal .logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .modal .logo h2 {
+            color: #ffffff;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal .logo p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal .modal-close {
+            position: absolute;
+            right: 1.5rem;
+            top: 1.5rem;
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 1.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal .modal-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .modal .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal .form-group label {
+            display: block;
+            margin-bottom: 0.75rem;
+            color: #ffffff;
+            font-weight: 500;
+            font-size: 0.95rem;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal .form-group input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.7);
+            color: #000000;
+            transition: all 0.3s ease;
+        }
+
+        .modal .form-group input:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+        }
+
+        .modal .email-update-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .modal .current-email {
+            color: #ffffff;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .modal .modal-btn {
+            padding: 0.875rem 1.5rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal .modal-btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal .modal-btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .modal .modal-btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .modal .modal-btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+        }
+
+        .modal .spinner {
+            margin-left: 0.5rem;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .modal .modal-content {
+                margin: 10% auto;
+                padding: 1.5rem;
+                width: 95%;
+            }
+
+            .modal .logo h2 {
+                font-size: 1.5rem;
+            }
+
+            .modal .logo p {
+                font-size: 0.9rem;
+            }
+
+            .modal .form-group input {
+                padding: 0.75rem;
+            }
+
+            .modal .modal-btn {
+                padding: 0.75rem 1.25rem;
+                font-size: 0.95rem;
+            }
+        }
+
+        /* Notification Message Styles */
+        .notification-message {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 500;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(8px);
+            min-width: 300px;
+            max-width: 90%;
+            text-align: center;
+        }
+
+        .notification-message.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .notification-message.success {
+            background: rgba(220, 252, 231, 0.95);
+            color: #16a34a;
+            border: 1px solid #bbf7d0;
+        }
+
+        .notification-message.error {
+            background: rgba(254, 226, 226, 0.95);
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+
+        .notification-message i {
+            margin-right: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .notification-message {
+                min-width: auto;
+                width: 90%;
+                padding: 0.75rem 1.5rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-slider">
+        <div class="login-slide active">
+            <img src="/assets/main-slider.jpg" alt="Main Hostel">
+        </div>
+        <div class="login-slide">
+            <img src="/assets/onyx-slider.jpg" alt="Onyx Hostel">
+        </div>
+        <div class="login-slide">
+            <img src="/assets/opal-slider.jpg" alt="Opal Hostel">
+        </div>
+    </div>
+    <div class="overlay"></div>
+    <div class="login-nav">
+        <button class="prev-slide">❮</button>
+        <button class="next-slide">❯</button>
+    </div>
+    <div class="auth-container">
+        <div class="auth-form">
+            <div class="logo">
+                <h2>Wagyingo Hostels</h2>
+                <p>Welcome back! Please login to your account.</p>
+            </div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username or Email</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                    <i class="password-toggle fas fa-eye" onclick="togglePassword()"></i>
+                </div>
+                <button type="submit">Login to Your Account</button>
+                <div class="auth-links">
+                    <a href="register.html">Don't have an account? Register</a>
+                    <a href="#" id="resendVerificationLink" class="mt-2 d-block">Need to resend verification code?</a>
+                </div>
+            </form>
+            <div class="error-message" id="errorAlert" style="display: none;"></div>
+            <div class="success-message" id="successAlert" style="display: none;"></div>
+        </div>
+    </div>
+
+    <!-- Resend Verification Modal -->
+    <div id="resendVerificationModal" class="modal">
+        <div class="modal-content">
+            <div class="logo">
+                <h2>Resend Verification Code</h2>
+                <p>Enter your username to resend the verification code</p>
+            </div>
+            <button type="button" class="modal-close" onclick="closeModal('resendVerificationModal')">&times;</button>
+            
+            <form id="resendVerificationForm">
+                <div class="form-group">
+                    <label for="resendUsername">Username</label>
+                    <input type="text" id="resendUsername" name="username" required placeholder="Enter your username">
+                </div>
+                
+                <div id="emailUpdateSection" style="display: none;" class="email-update-section">
+                    <p class="current-email">Current email: <span id="currentEmailSpan"></span></p>
+                    <div class="form-group">
+                        <label for="newEmail">New Email (Optional)</label>
+                        <input type="email" id="newEmail" name="newEmail" placeholder="Enter new email address">
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="modal-btn modal-btn-secondary" onclick="closeModal('resendVerificationModal')">Cancel</button>
+                    <button type="submit" class="modal-btn modal-btn-primary" id="resendVerificationBtn">
+                        <span class="button-text">Resend Code</span>
+                        <span class="spinner" style="display: none;">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification Message Element -->
+    <div id="notificationMessage" class="notification-message"></div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.login-slider .login-slide');
+        const prevBtn = document.querySelector('.prev-slide');
+        const nextBtn = document.querySelector('.next-slide');
+        let sliderInterval;
+
+        console.log('Initial setup:', {
+            totalSlides: slides.length,
+            currentSlide: currentSlide
+        });
+
+        function updateSlider() {
+            console.log('Updating slider:', {
+                previousSlide: currentSlide,
+                totalSlides: slides.length
+            });
+
+            slides.forEach((slide, index) => {
+                const wasActive = slide.classList.contains('active');
+                
+                // Remove active class from all slides first
+                slide.classList.remove('active');
+                slide.style.display = 'none';
+                slide.style.opacity = '0';
+                
+                // Add active class to current slide
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                    slide.style.display = 'block';
+                    // Force a reflow before setting opacity
+                    void slide.offsetWidth;
+                    slide.style.opacity = '1';
+                }
+                
+                const isNowActive = slide.classList.contains('active');
+                
+                console.log(`Slide ${index}:`, {
+                    wasActive,
+                    isNowActive,
+                    display: slide.style.display,
+                    opacity: slide.style.opacity,
+                    imageUrl: slide.querySelector('img').src
+                });
+            });
+        }
+
+        // Initialize all slides
+        slides.forEach((slide, index) => {
+            if (index === currentSlide) {
+                slide.classList.add('active');
+                slide.style.display = 'block';
+                slide.style.opacity = '1';
+            } else {
+                slide.classList.remove('active');
+                slide.style.display = 'none';
+                slide.style.opacity = '0';
+            }
+        });
+
+        // Initialize slider controls
+        prevBtn.addEventListener('click', () => {
+            console.log('Previous button clicked');
+            clearInterval(sliderInterval); // Stop auto-advance when manually navigating
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            console.log('New slide index:', currentSlide);
+            updateSlider();
+        });
+
+        nextBtn.addEventListener('click', () => {
+            console.log('Next button clicked');
+            clearInterval(sliderInterval); // Stop auto-advance when manually navigating
+            currentSlide = (currentSlide + 1) % slides.length;
+            console.log('New slide index:', currentSlide);
+            updateSlider();
+        });
+
+        // Auto advance slides
+        sliderInterval = setInterval(() => {
+            console.log('Auto-advancing slider');
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateSlider();
+        }, 5000);
+
+        // Add image load event listeners
+        slides.forEach((slide, index) => {
+            const img = slide.querySelector('img');
+            img.addEventListener('load', () => {
+                console.log(`Image ${index} loaded:`, {
+                    src: img.src,
+                    naturalWidth: img.naturalWidth,
+                    naturalHeight: img.naturalHeight,
+                    displayWidth: img.offsetWidth,
+                    displayHeight: img.offsetHeight,
+                    computedStyle: window.getComputedStyle(img)
+                });
+            });
+            
+            img.addEventListener('error', () => {
+                console.error(`Image ${index} failed to load:`, img.src);
+            });
+        });
+
+        // Log initial state when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, checking slider state');
+            console.log('Active slides:', document.querySelectorAll('.login-slide.active').length);
+            console.log('Total slides:', slides.length);
+            
+            // Check computed styles of first slide
+            const firstSlide = slides[0];
+            const computedStyle = window.getComputedStyle(firstSlide);
+            console.log('First slide computed styles:', {
+                display: computedStyle.display,
+                opacity: computedStyle.opacity,
+                zIndex: computedStyle.zIndex,
+                position: computedStyle.position
+            });
+
+            // Check URL parameters for verification status
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('verified') === 'true') {
+                showNotification('Email verified successfully! You can now log in.', 'success');
+            } else if (urlParams.get('error') === 'verification_failed') {
+                showNotification('Email verification failed. Please try again or contact support.', 'error');
+            }
+
+            // Initialize resend verification functionality
+            const resendVerificationLink = document.getElementById('resendVerificationLink');
+            const resendVerificationForm = document.getElementById('resendVerificationForm');
+            const resendVerificationBtn = document.getElementById('resendVerificationBtn');
+            const emailUpdateSection = document.getElementById('emailUpdateSection');
+            const currentEmailSpan = document.getElementById('currentEmailSpan');
+
+            resendVerificationLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                openModal();
+            });
+
+            resendVerificationForm.querySelector('#resendUsername').addEventListener('input', async function() {
+                const username = this.value;
+                if (username.length >= 3) {
+                    try {
+                        const response = await fetch(`/api/check-user?username=${encodeURIComponent(username)}`);
+                        const data = await response.json();
+                        
+                        if (data.exists && !data.is_verified) {
+                            emailUpdateSection.style.display = 'block';
+                            currentEmailSpan.textContent = data.email;
+                        } else {
+                            emailUpdateSection.style.display = 'none';
+                        }
+                    } catch (error) {
+                        console.error('Error checking username:', error);
+                    }
+                }
+            });
+
+            resendVerificationBtn.addEventListener('click', async function() {
+                const username = document.getElementById('resendUsername').value;
+                const newEmail = document.getElementById('newEmail').value;
+
+                if (!username) {
+                    showNotification('Please enter your username', 'error');
+                    return;
+                }
+
+                // Show loading state
+                const btnText = this.querySelector('.button-text');
+                const btnLoader = this.querySelector('.spinner');
+                this.disabled = true;
+                btnText.style.display = 'none';
+                btnLoader.style.display = 'inline-block';
+
+                try {
+                    const response = await fetch('/api/resend-verification', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ username, new_email: newEmail })
+                    });
+
+                    const data = await response.json();
+
+                    if (!response.ok) {
+                        throw new Error(data.error || 'Failed to resend verification code');
+                    }
+
+                    showNotification(data.message || 'Verification code sent successfully', 'success');
+                    closeModal();
+                    resendVerificationForm.reset();
+                } catch (error) {
+                    showNotification(error.message, 'error');
+                } finally {
+                    // Restore button state
+                    this.disabled = false;
+                    btnText.style.display = 'inline-block';
+                    btnLoader.style.display = 'none';
+                }
+            });
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const errorAlert = document.getElementById('errorAlert');
+            const successAlert = document.getElementById('successAlert');
+            errorAlert.style.display = 'none';
+            successAlert.style.display = 'none';
+            
+            const formData = new FormData(this);
+            const data = {
+                username: formData.get('username'),
+                password: formData.get('password')
+            };
+            
+            fetch('/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include',
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    // Check if the error is due to unverified email
+                    if (data.error === 'Please verify your email address before logging in') {
+                        errorAlert.textContent = 'Please verify your email address before logging in. Check your email/spam folder for the verification link';
+                    } else {
+                        errorAlert.textContent = data.error;
+                    }
+                    errorAlert.style.display = 'block';
+                } else {
+                    successAlert.textContent = data.message;
+                    successAlert.style.display = 'block';
+                    
+                    // Redirect based on response
+                    setTimeout(() => {
+                        window.location.href = data.redirect || '/index.html';
+                    }, 1000);
+                }
+            })
+            .catch(error => {
+                errorAlert.textContent = 'An error occurred during login';
+                errorAlert.style.display = 'block';
+            });
+        });
+
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notificationMessage');
+            const icon = type === 'success' ? 'check-circle' : 'exclamation-circle';
+            
+            notification.innerHTML = `<i class="fas fa-${icon}"></i>${message}`;
+            notification.className = `notification-message ${type}`;
+            notification.classList.add('visible');
+
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                notification.classList.remove('visible');
+            }, 5000);
+        }
+
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.querySelector('.password-toggle');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+
+        // Modal functions
+        function openModal() {
+            document.getElementById('resendVerificationModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('resendVerificationModal');
+            if (event.target === modal) {
+                closeModal('resendVerificationModal');
+            }
+        }
+    </script>
+</body>
+</html> 

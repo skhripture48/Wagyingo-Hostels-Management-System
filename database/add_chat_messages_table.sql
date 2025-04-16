@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS chat_messages (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    hostel_name VARCHAR(255) NOT NULL,
+    user_id INT NOT NULL,
+    username VARCHAR(255) NOT NULL,
+    message TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+); 

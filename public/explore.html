@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore - Wagyingo Hostels</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 80px; /* Add space for fixed navbar */
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .explore-section {
+            padding: 20px 5%;
+            min-height: calc(100vh - 80px - 60px); /* viewport height - navbar - footer */
+        }
+
+        footer {
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .navbar {
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Wagyingo Hostels</div>
+        <button class="menu-btn" id="menuBtn">☰</button>
+        <div class="nav-links">
+            <div class="nav-menu">
+                <a href="index.html">Home</a>
+                <a href="explore.html" class="active">Explore</a>
+                <a href="#" id="roomsNavLink" style="display: none;">Available Rooms</a>
+                <a href="booking-details.html" id="bookingDetailsLink" style="display: none;">My Booking</a>
+                <a href="residents-portal.html" id="residentsPortalLink" style="display: none;">Residents Portal</a>
+            </div>
+            <div id="auth-buttons">
+                <button id="loginBtn" class="btn" onclick="window.location.href='login.html'">Login</button>
+                <button id="registerBtn" class="btn" onclick="window.location.href='register.html'">Register</button>
+                <button id="logoutBtn" class="btn" style="display: none;">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <section id="explore" class="explore-section">
+        <h2>Explore Our Hostels</h2>
+        <div class="hostel-details">
+            <div class="hostel-tabs">
+                <button class="tab-btn active" data-hostel="main">Main Hostel</button>
+                <button class="tab-btn" data-hostel="onyx">Onyx Hostel</button>
+                <button class="tab-btn" data-hostel="opal">Opal Hostel</button>
+            </div>
+            
+            <div class="hostel-content">
+                <div class="hostel-tab-content active" id="main-content">
+                    <div class="hostel-gallery">
+                        <img src="assets/explore_images/ex.main1.jpg" alt="Main Hostel Exterior">
+                        <img src="assets/explore_images/ex.main2.jpg" alt="Main Hostel Common Room">
+                        <img src="assets/explore_images/ex.main3.jpg" alt="Main Hostel Room">
+                    </div>
+                    <div class="hostel-info">
+                        <h3>Main Hostel</h3>
+                        <p>Located in the heart of campus, Main Hostel offers traditional comfort with modern amenities. Our facilities include:</p>
+                        <ul>
+                            <li>24/7 Security</li>
+                            <li>Study Rooms</li>
+                            <li>Common Kitchen</li>
+                            <li>Laundry Facilities</li>
+                        </ul>
+                        <div class="map-container">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3962.774615548858!2d-1.564324988646114!3d6.674823393292435!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfdb946255decc85%3A0x4768f574b0dee744!2sWagyingo%20Main%20Hostel!5e0!3m2!1sen!2sgh!4v1743799938639!5m2!1sen!2sgh" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hostel-tab-content" id="onyx-content">
+                    <div class="hostel-gallery">
+                        <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" alt="Onyx Hostel Exterior">
+                        <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" alt="Onyx Hostel Common Room">
+                        <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" alt="Onyx Hostel Room">
+                    </div>
+                    <div class="hostel-info">
+                        <h3>Onyx Hostel</h3>
+                        <p>Modern amenities and study spaces define Onyx Hostel. Our facilities include:</p>
+                        <ul>
+                            <li>High-Speed Internet</li>
+                            <li>Modern Study Areas</li>
+                            <li>Gym Access</li>
+                            <li>24/7 Security</li>
+                        </ul>
+                        <div class="map-container">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3962.7989488411185!2d-1.562837588646146!3d6.671816393295418!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfdb95359bde6dad%3A0xcbc6fcfa7b744b3d!2sWagyingo%20Onyx%20Hostel!5e0!3m2!1sen!2sgh!4v1743823272296!5m2!1sen!2sgh" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hostel-tab-content" id="opal-content">
+                    <div class="hostel-gallery">
+                        <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" alt="Opal Hostel Exterior">
+                        <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" alt="Opal Hostel Common Room">
+                        <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" alt="Opal Hostel Room">
+                    </div>
+                    <div class="hostel-info">
+                        <h3>Opal Hostel</h3>
+                        <p>Peaceful environment for focused study. Our facilities include:</p>
+                        <ul>
+                            <li>Quiet Study Areas</li>
+                            <li>Library Access</li>
+                            <li>24/7 Security</li>
+                            <li>Laundry Facilities</li>
+                        </ul>
+                        <div class="map-container">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3962.7824759019863!2d-1.56132688864617!3d6.673852193293383!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfdb95f5861c72b3%3A0x21606a33ae8fca21!2sWagyingo%20Opal%20Hostel!5e0!3m2!1sen!2sgh!4v1743823480238!5m2!1sen!2sgh" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Wagyingo Hostels. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 

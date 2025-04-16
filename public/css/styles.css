@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap');
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(52, 152, 219, 0.2);
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(52, 152, 219, 0.2) transparent;
+}
+
+/* Notification Dropdown Styles */
+.notificationsList.dropdown-menu {
+    max-height: 400px;
+    overflow-y: auto;
+    width: 300px;
+    background: #FFFFFF;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 0;
+}
+
+/* Notification Item Styles */
+.notificationsList .dropdown-item {
+    padding: 15px;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.notificationsList .dropdown-item .notification-title {
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 14px;
+    margin-bottom: 3px;
+}
+
+.notificationsList .dropdown-item .notification-message {
+    color: #666;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.notificationsList .dropdown-item .notification-time {
+    color: #999;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.notificationsList .dropdown-item:hover {
+    background-color: #f8f9fa;
+    text-decoration: none;
+}
+
+.notificationsList .dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.notificationsList .dropdown-item.unread {
+    background-color: #f0f7ff;
+}
+
+.notificationsList .dropdown-item.unread:hover {
+    background-color: #e5f1ff;
+}
+
+/* Mobile Responsive Styles */
+@media screen and (max-width: 768px) {
+    .notificationsList.dropdown-menu {
+        position: fixed !important;
+        top: 60px !important;
+        right: 10px !important;
+        left: 10px !important;
+        width: calc(100% - 20px) !important;
+        margin: 0 !important;
+        border-radius: 8px !important;
+        max-height: calc(100vh - 80px);
+        transform: none !important;
+        z-index: 1050 !important;
+    }
+
+    .navbar .dropdown-menu {
+        background-color: #fff !important;
+        border: 1px solid rgba(0,0,0,0.1) !important;
+    }
+
+    .notificationsList .dropdown-item {
+        padding: 15px;
+    }
+
+    .notificationsList .dropdown-item .notification-title {
+        font-size: 15px;
+    }
+
+    .notificationsList .dropdown-item .notification-message {
+        font-size: 14px;
+    }
+}
+
+/* Rest of the CSS file content... */ 

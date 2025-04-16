@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Wagyingo Hostels</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --primary-dark: #2980b9;
+            --text-dark: #2d3436;
+            --text-light: #636e72;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f5f6fa;
+            overflow-x: hidden;
+        }
+
+        .login-slider {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            background-color: #000;
+        }
+
+        .login-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            display: none;
+            background-color: #000;
+        }
+
+        .login-slide.active {
+            opacity: 1;
+            display: block;
+        }
+
+        .login-slide img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, 
+                rgba(0, 0, 0, 0.7) 0%, 
+                rgba(0, 0, 0, 0.5) 50%, 
+                rgba(0, 0, 0, 0.7) 100%
+            );
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .auth-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+            pointer-events: none;
+            padding: 1rem;
+            box-sizing: border-box;
+        }
+
+        .auth-form {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            padding: 1.75rem;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+            pointer-events: auto;
+            transform: translateY(0);
+            transition: all 0.3s ease;
+            margin: 0;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .logo h2 {
+            color: #ffffff;
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.95rem;
+            font-weight: 400;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            margin-bottom: 0;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.375rem;
+            color: #ffffff;
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.7);
+            color: #000000;
+            box-sizing: border-box;
+            height: 42px;
+        }
+
+        .form-group input::placeholder {
+            color: rgba(0, 0, 0, 0.5);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 1rem;
+            top: calc(50% + 0.375rem);
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+            padding: 0.25rem;
+            z-index: 2;
+        }
+
+        .password-toggle:hover {
+            color: rgba(0, 0, 0, 0.8);
+        }
+
+        .form-group input[type="password"] {
+            padding-right: 3rem;
+        }
+
+        .password-strength-meter {
+            height: 3px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 1.5px;
+            margin-top: 0.375rem;
+            overflow: hidden;
+        }
+
+        .strength-meter-fill {
+            height: 100%;
+            width: 0;
+            transition: width 0.3s ease, background-color 0.3s ease;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 0.75rem;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        button[type="submit"]:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .auth-links {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .auth-links a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .auth-links a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        .notification-message {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100%);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 500;
+            z-index: 1000;
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            min-width: 300px;
+            max-width: 90%;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .notification-message.error {
+            background: rgba(231, 76, 60, 0.95);
+            color: #ffffff;
+            border: 1px solid rgba(231, 76, 60, 0.3);
+        }
+
+        .notification-message.success {
+            background: rgba(46, 204, 113, 0.95);
+            color: #ffffff;
+            border: 1px solid rgba(46, 204, 113, 0.3);
+        }
+
+        .notification-message.visible {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .notification-message i {
+            margin-right: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .notification-message {
+                width: 90%;
+                top: 10px;
+                padding: 0.875rem 1.5rem;
+                font-size: 0.95rem;
+            }
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 480px) {
+            .auth-container {
+                padding: 1rem;
+            }
+
+            .auth-form {
+                padding: 1.25rem;
+                width: 90%;
+                max-width: 360px;
+                border-radius: 14px;
+            }
+
+            .logo h2 {
+                font-size: 1.5rem;
+                margin-bottom: 0.375rem;
+            }
+
+            .logo p {
+                font-size: 0.9rem;
+            }
+
+            .form-group {
+                margin-bottom: 0.875rem;
+            }
+
+            .form-group label {
+                font-size: 0.85rem;
+                margin-bottom: 0.25rem;
+            }
+
+            .form-group input,
+            .form-group select {
+                padding: 0.625rem 0.875rem;
+                font-size: 0.9rem;
+                height: 40px;
+            }
+
+            button[type="submit"] {
+                padding: 0.625rem;
+                font-size: 0.95rem;
+                height: 40px;
+                margin-top: 0.5rem;
+            }
+
+            .auth-links {
+                margin-top: 0.875rem;
+            }
+
+            .auth-links a {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-slider">
+        <div class="login-slide active">
+            <img src="/assets/main-slider.jpg" alt="Main Hostel">
+        </div>
+        <div class="login-slide">
+            <img src="/assets/onyx-slider.jpg" alt="Onyx Hostel">
+        </div>
+        <div class="login-slide">
+            <img src="/assets/opal-slider.jpg" alt="Opal Hostel">
+        </div>
+    </div>
+    <div class="overlay"></div>
+    <div class="auth-container">
+        <div class="auth-form">
+            <div class="logo">
+                <h2>Wagyingo Hostels</h2>
+                <p>Create your account to get started</p>
+            </div>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="full_name">Full Name</label>
+                    <input type="text" id="full_name" name="full_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="preferred_hostel">Preferred Hostel</label>
+                    <select id="preferred_hostel" name="preferred_hostel" required>
+                        <option value="">Select a hostel</option>
+                        <option value="Wagyingo Main Hostel">Wagyingo Main Hostel</option>
+                        <option value="Wagyingo Onyx Hostel">Wagyingo Onyx Hostel</option>
+                        <option value="Wagyingo Opal Hostel">Wagyingo Opal Hostel</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                    <i class="password-toggle fas fa-eye" onclick="togglePassword('password')"></i>
+                    <div class="password-strength-meter">
+                        <div class="strength-meter-fill"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="confirm_password">Confirm Password</label>
+                    <input type="password" id="confirm_password" name="confirm_password" required>
+                    <i class="password-toggle fas fa-eye" onclick="togglePassword('confirm_password')"></i>
+                </div>
+                <button type="submit" class="btn">
+                    <span class="btn-text">Create Account</span>
+                    <span class="btn-loader" style="display: none;">
+                        <i class="fas fa-spinner fa-spin"></i>
+                    </span>
+                </button>
+                <div class="auth-links">
+                    <a href="login.html">Already have an account? Login</a>
+                </div>
+            </form>
+            <!-- Remove old notification elements -->
+        </div>
+    </div>
+
+    <!-- Add notification message element -->
+    <div id="notificationMessage" class="notification-message"></div>
+
+    <script>
+        // Background slider functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.login-slide');
+        
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        // Change slide every 5 seconds
+        setInterval(nextSlide, 5000);
+
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notificationMessage');
+            const icon = type === 'success' ? 'check-circle' : 'exclamation-circle';
+            
+            notification.innerHTML = `<i class="fas fa-${icon}"></i>${message}`;
+            notification.className = `notification-message ${type}`;
+            notification.classList.add('visible');
+
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                notification.classList.remove('visible');
+            }, 5000);
+        }
+
+        // Function to validate the form
+        function validateForm(data) {
+            // Validate username length
+            if (data.username.length < 3) {
+                showNotification('Username must be at least 3 characters long', 'error');
+                return false;
+            }
+            
+            // Validate passwords match
+            if (data.password !== data.confirm_password) {
+                showNotification('Passwords do not match', 'error');
+                return false;
+            }
+
+            // Validate password length
+            if (data.password.length < 8) {
+                showNotification('Password must be at least 8 characters long', 'error');
+                return false;
+            }
+
+            // Check for empty fields
+            const emptyFields = Object.entries(data)
+                .filter(([key, value]) => !value && key !== 'confirm_password')
+                .map(([key]) => key.replace('_', ' '));
+
+            if (emptyFields.length > 0) {
+                showNotification(`Please fill in all fields: ${emptyFields.join(', ')}`, 'error');
+                return false;
+            }
+
+            return true;
+        }
+
+        // Handle form submission
+        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            
+            // Validate form
+            if (!validateForm(data)) {
+                return;
+            }
+
+            // Show loading state
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const btnLoader = submitBtn.querySelector('.btn-loader');
+            submitBtn.disabled = true;
+            btnText.style.display = 'none';
+            btnLoader.style.display = 'inline-block';
+
+            try {
+                const response = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(result.error || result.message || 'Registration failed');
+                }
+
+                // Show success message
+                showNotification('Registration successful! Please check your email for verification.');
+                
+                // Reset form
+                e.target.reset();
+                
+                // Redirect to login page after a delay
+                setTimeout(() => {
+                    window.location.href = '/login.html';
+                }, 1500);
+                
+            } catch (error) {
+                console.error('Registration error:', error);
+                showNotification(error.message || 'An error occurred during registration', 'error');
+            } finally {
+                // Restore button state
+                submitBtn.disabled = false;
+                btnText.style.display = 'inline-block';
+                btnLoader.style.display = 'none';
+            }
+        });
+
+        // Add real-time validation for username
+        let usernameTimeout;
+        document.querySelector('input[name="username"]').addEventListener('input', function(e) {
+            clearTimeout(usernameTimeout);
+            usernameTimeout = setTimeout(() => {
+                if (e.target.value.length > 0 && e.target.value.length < 3) {
+                    showNotification('Username must be at least 3 characters long', 'error');
+                }
+            }, 500);
+        });
+
+        // Add real-time validation for password match
+        let passwordTimeout;
+        document.querySelector('input[name="confirm_password"]').addEventListener('input', function(e) {
+            clearTimeout(passwordTimeout);
+            passwordTimeout = setTimeout(() => {
+                const password = document.querySelector('input[name="password"]').value;
+                if (e.target.value && password && e.target.value !== password) {
+                    showNotification('Passwords do not match', 'error');
+                }
+            }, 500);
+        });
+
+        // Password visibility toggle
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const icon = input.nextElementSibling.querySelector('i');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // Password strength meter
+        document.getElementById('password').addEventListener('input', function(e) {
+            const password = e.target.value;
+            const strengthMeter = document.querySelector('.strength-meter-fill');
+            let strength = 0;
+            
+            if (password.length >= 8) strength += 25;
+            if (password.match(/[a-z]/)) strength += 25;
+            if (password.match(/[A-Z]/)) strength += 25;
+            if (password.match(/[0-9]/)) strength += 25;
+            
+            strengthMeter.style.width = strength + '%';
+            
+            if (strength <= 25) {
+                strengthMeter.style.backgroundColor = '#ff4444';
+            } else if (strength <= 50) {
+                strengthMeter.style.backgroundColor = '#ffbb33';
+            } else if (strength <= 75) {
+                strengthMeter.style.backgroundColor = '#00C851';
+            } else {
+                strengthMeter.style.backgroundColor = '#007E33';
+            }
+        });
+    </script>
+</body>
+</html> 
